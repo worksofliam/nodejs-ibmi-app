@@ -1,7 +1,12 @@
-let abcd = "cool";
+import express from "express";
 
-console.log(`Hello world`);
+const app = express();
+const port = process.env.PORT || 3000;
 
-abcd = "sick";
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+})
 
-console.log(abcd);
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
