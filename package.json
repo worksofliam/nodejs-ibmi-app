@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build": "tsc",
+    "build:dev": "tsc --sourceMap",
+    "start": "tsc && node build/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "typescript": "^5.1.3"
+  }
+}
