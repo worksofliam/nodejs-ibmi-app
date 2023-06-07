@@ -17,6 +17,7 @@
         "${workspaceFolder}/build/**/*.js"
       ],
       "preLaunchTask": "npm: build:dev",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
