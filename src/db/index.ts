@@ -10,6 +10,11 @@ export default class {
   /**
    * @throws Will crash if query is invalid
    */
+  /*
+  static query<T>(statement: string, bindingsValues: (number|string)[] = []): Promise<T[]> {
+    return this.pool.query(statement, bindingsValues) as Promise<T[]>;
+  }
+  */
   static async query<T>(statement: string, bindingsValues: (number|string)[] = []) {
     console.log(this.pool);
     return this.pool.query(statement, bindingsValues);
