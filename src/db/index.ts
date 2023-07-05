@@ -16,13 +16,11 @@ export default class {
   }
   */
   static async query<T>(statement: string, bindingsValues: (number|string)[] = []) {
-    console.log(this.pool);
     return this.pool.query(statement, bindingsValues);
   }
 
   static async callProcedure<T>(catalog: string|null, library: string, procedure: string, bindingsValues: (number|string)[] = []) {
     const connection = await this.pool.connect();
-    console.log(this.pool);
     return connection.callProcedure(catalog, library, procedure, bindingsValues);
   }
 }
