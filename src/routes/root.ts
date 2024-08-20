@@ -15,20 +15,21 @@ root.get('/test', async (req, res) => {
   res.json(result.data);
 });
 
-// root.get('/people', async (req, res) => {
-//   let result = await db.query("call X.people()");
+root.get('/people', async (req, res) => {
+  let result = await db.query("call liama.people()");
 
-//   res.json(result);
-// });
+  res.json(result.data);
+});
 
 // root.get(`/sum`, async (req, res) => {
 //   const numa = Number(req.query.numa);
 //   const numb = Number(req.query.numb);
 
-//   let result = await db.callProcedure(null, `X`, `SUMPGM`, [numa, numb, 0]);
+//   // Currently broken in Mapepire
+//   let result = await db.query(`call liama.sumpgm(?, ?, ?)`, [numa, numb, 1]);
 
 //   res.json({
-//     result: result.parameters[2]
+//     result
 //   })
 // });
 
