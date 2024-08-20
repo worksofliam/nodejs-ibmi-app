@@ -9,11 +9,11 @@ root.get('/', async (req, res) => {
   res.send('Hello world!');
 });
 
-// root.get('/test', async (req, res) => {
-//   let result = await db.query("SELECT * FROM SAMPLE.EMPLOYEE");
+root.get('/test', async (req, res) => {
+  let result = await db.query("SELECT * FROM SAMPLE.EMPLOYEE");
 
-//   res.json(result);
-// });
+  res.json(result.data);
+});
 
 // root.get('/people', async (req, res) => {
 //   let result = await db.query("call X.people()");

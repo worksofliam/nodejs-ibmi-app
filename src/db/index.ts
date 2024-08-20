@@ -1,10 +1,15 @@
-import odbc from "odbc";
+import * as mapepire from "mapepire-js";
+import { DaemonServer } from "mapepire-js/dist/src/types";
 
 export default class {
-  private static pool: odbc.Pool;
+  private static pool: mapepire.Pool;
 
-  static async connect(connectionString: string) {
-    this.pool = await odbc.pool(connectionString);
+  static async connect(server: DaemonServer) {
+    const ca = await mapepire.getCertificate(server);
+    server.ca = ca.raw;
+
+    this.pool = new mapepire.Pool({creds: server, maxSize: 5, startingSize: 1});
+    await this.pool.init();
   }
 
   /**
@@ -16,20 +21,13 @@ export default class {
   }
   */
   static async query<T>(statement: string, bindingsValues: (number|string)[] = []) {
-    return this.pool.query(statement, bindingsValues);
-  }
-
-  static async callProcedure<T>(catalog: string|null, library: string, procedure: string, bindingsValues: (number|string)[] = []) {
-    const connection = await this.pool.connect();
-    return connection.callProcedure(catalog, library, procedure, bindingsValues);
+    return this.pool.execute(statement, {parameters: bindingsValues});
   }
 }
 
-export const connectionString = [
-  `DRIVER=IBM i Access ODBC Driver`,
-  `SYSTEM=${process.env.DB_HOST}`,
-  `UID=${process.env.DB_ID}`,
-  `Password=${process.env.DB_PASSWORD}`,
-  `Naming=1`,
-  `DBQ=,${process.env[`DB_DBQ`] ? process.env[`DB_DBQ`] : `*USRLIBL`}`,
-].join(`;`);
+export const DatabaseServer: DaemonServer = {
+  host: process.env.DB_HOST!,
+  user: process.env.DB_ID!,
+  password: process.env.DB_PASSWORD!,
+  ignoreUnauthorized: true,
+}
