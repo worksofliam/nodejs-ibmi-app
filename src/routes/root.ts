@@ -21,16 +21,16 @@ root.get('/people', async (req, res) => {
   res.json(result.data);
 });
 
-// root.get(`/sum`, async (req, res) => {
-//   const numa = Number(req.query.numa);
-//   const numb = Number(req.query.numb);
+root.get(`/sum`, async (req, res) => {
+  const numa = Number(req.query.numa);
+  const numb = Number(req.query.numb);
 
-//   // Currently broken in Mapepire
-//   let result = await db.query(`call liama.sumpgm(?, ?, ?)`, [numa, numb, 1]);
+  // Currently broken in Mapepire
+  let result = await db.query(`call liama.sumpgm(?, ?, ?)`, [numa, numb, 1]);
 
-//   res.json({
-//     result
-//   })
-// });
+  res.json({
+    result: result.output_parms
+  })
+});
 
 export default root;
