@@ -10,8 +10,8 @@
     "typescript": "^5.1.3"
   },
   "dependencies": {
+    "@ibm/mapepire-js": "^0.0.1",
     "body-parser": "^1.20.2",
-    "express": "^4.18.2",
-    "mapepire-js": "file:../../Repos/mapepire/mapepire-js"
+    "express": "^4.18.2"
   }
 }

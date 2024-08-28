@@ -1,5 +1,5 @@
-import * as mapepire from "mapepire-js";
-import { DaemonServer } from "mapepire-js/dist/src/types";
+import * as mapepire from "@ibm/mapepire-js";
+import {DaemonServer} from "@ibm/mapepire-js/dist/src/types"
 
 export default class {
   private static pool: mapepire.Pool;
