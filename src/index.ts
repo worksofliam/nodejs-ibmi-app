@@ -1,17 +1,32 @@
 import express from "express";
 import { json } from "body-parser";
 
-import db, { DatabaseServer } from "./db";
+import { DatabaseServer, Db } from "./db";
 import root from "./routes/root";
+
+declare global {
+  namespace Express {
+    interface Request {
+      db: Db;
+    }
+  }
+}
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(json());
 
-app.use(root);
+const database = new Db();
 
-db.connect(DatabaseServer).then(() => {
+database.connect(DatabaseServer).then(() => {
+  app.use((req, res, next) => {
+    req.db = database;
+    next();
+  });
+  
+  app.use(root);
+  
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   });

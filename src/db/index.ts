@@ -1,10 +1,10 @@
 import * as mapepire from "@ibm/mapepire-js";
 import {DaemonServer} from "@ibm/mapepire-js/dist/src/types"
 
-export default class {
-  private static pool: mapepire.Pool;
+export class Db {
+  private pool: mapepire.Pool|undefined;
 
-  static async connect(server: DaemonServer) {
+  async connect(server: DaemonServer) {
     const ca = await mapepire.getCertificate(server);
     server.ca = ca.raw;
 
@@ -20,7 +20,11 @@ export default class {
     return this.pool.query(statement, bindingsValues) as Promise<T[]>;
   }
   */
-  static async query<T>(statement: string, bindingsValues: (number|string)[] = []) {
+  async query<T>(statement: string, bindingsValues: (number|string)[] = []) {
+    if (!this.pool) {
+      throw new Error("Database not connected");
+    }
+    
     return this.pool.execute(statement, {parameters: bindingsValues});
   }
 }
